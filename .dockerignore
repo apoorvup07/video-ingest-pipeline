@@ -1,0 +1,5 @@
+.git
+tests
+infra
+*.mp4
+__pycache__
