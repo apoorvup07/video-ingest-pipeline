@@ -40,9 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t video-ingest-pipeline:ci .
-      - name: Scan image
-        uses: aquasecurity/trivy-action@v0.28.0
-        with:
-          image-ref: video-ingest-pipeline:ci
-          severity: CRITICAL
-          exit-code: "0"
+      - name: Scan image (Trivy via its official container image)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest image --severity CRITICAL --exit-code 0 --no-progress \
+            video-ingest-pipeline:ci
